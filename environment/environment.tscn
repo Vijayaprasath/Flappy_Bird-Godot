@@ -1,0 +1,60 @@
+[gd_scene load_steps=6 format=3 uid="uid://dve73t6udq4r7"]
+
+[ext_resource type="Texture2D" uid="uid://hc08i3shoten" path="res://assets/textures/ground.png" id="1_5d34y"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_00bjw"]
+size = Vector2(480, 168)
+
+[sub_resource type="Animation" id="Animation_mnx2j"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_7crox"]
+resource_name = "scroll"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-220, -2)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8qx62"]
+_data = {
+"RESET": SubResource("Animation_mnx2j"),
+"scroll": SubResource("Animation_7crox")
+}
+
+[node name="Ground" type="StaticBody2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("1_5d34y")
+centered = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(240, 84)
+shape = SubResource("RectangleShape2D_00bjw")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_8qx62")
+}
+autoplay = "scroll"
